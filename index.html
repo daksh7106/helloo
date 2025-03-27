@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Love Terminal ❤️</title>
+  <style>
+    body {
+      background-color: black;
+      color: lime;
+      font-family: monospace;
+      padding: 20px;
+    }
+    .terminal {
+      white-space: pre-line;
+      font-size: 18px;
+    }
+    .heart {
+      animation: pulse 1s infinite alternate;
+    }
+    @keyframes pulse {
+      from { opacity: 0.3; }
+      to { opacity: 1; }
+    }
+    button {
+      background-color: lime;
+      color: black;
+      border: none;
+      padding: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="terminal" id="terminal">
+    <div id="hearts"></div>
+    <br>
+    <div id="quiz"></div>
+  </div>
+
+  <script>
+    const hearts = ["❤️", "💖", "💘", "💕", "💗", "💓", "💞"];
+    const heartContainer = document.getElementById("hearts");
+    const quizContainer = document.getElementById("quiz");
+
+    let heartIndex = 0;
+
+    function animateHearts() {
+      if (heartIndex < hearts.length) {
+        heartContainer.innerHTML += hearts[heartIndex] + " ";
+        heartIndex++;
+        setTimeout(animateHearts, 500);
+      } else {
+        setTimeout(startQuiz, 1000);
+      }
+    }
+
+    function startQuiz() {
+      quizContainer.innerHTML = `
+        <p>Let's play a cute little quiz! 💕</p>
+        <p>Q1: Who is your favorite person in the whole world?</p>
+        <button onclick="answer(1)">You 😍</button>
+        <button onclick="answer(0)">Pizza 🍕</button>
+      `;
+    }
+
+    function answer(score) {
+      if (score === 1) {
+        quizContainer.innerHTML = "<p>Correct! 🥰 You’re the smartest and cutest! 💖</p>";
+      } else {
+        quizContainer.innerHTML = "<p>Oops! Try again 😉</p>";
+      }
+    }
+
+    animateHearts();
+  </script>
+</body>
+</html>
+
