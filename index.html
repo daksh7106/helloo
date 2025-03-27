@@ -22,10 +22,17 @@
       font-weight: bold;
       cursor: pointer;
       margin-top: 10px;
+      margin-right: 5px;
     }
   </style>
 </head>
 <body>
+  <!-- 🎵 Background Music -->
+  <audio autoplay loop hidden>
+    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+
   <div class="terminal" id="terminal">
     <div id="hearts"></div>
     <br>
@@ -36,8 +43,37 @@
     const hearts = ["❤️", "💖", "💘", "💕", "💗", "💓", "💞"];
     const heartContainer = document.getElementById("hearts");
     const quizContainer = document.getElementById("quiz");
-
     let heartIndex = 0;
+    let score = 0;
+    let questionIndex = 0;
+
+    const questions = [
+      {
+        q: "Q1: Who is your favorite person in the whole world?",
+        a1: "You 😍", correct1: true,
+        a2: "Pizza 🍕", correct2: false
+      },
+      {
+        q: "Q2: What’s my favorite thing to do with you?",
+        a1: "Talk forever 🥹", correct1: true,
+        a2: "Play video games 🎮", correct2: false
+      },
+      {
+        q: "Q3: What do I call you when I’m feeling cute?",
+        a1: "My lil bug 🐞", correct1: true,
+        a2: "Random citizen 🧍‍♂️", correct2: false
+      },
+      {
+        q: "Q4: How much do I love you?",
+        a1: "To the moon and back 🚀", correct1: true,
+        a2: "As much as I love food 🍜", correct2: false
+      },
+      {
+        q: "Q5: Final question... Wanna be mine forever? 💍",
+        a1: "Yes forever and ever 💘", correct1: true,
+        a2: "Let me think... 😂", correct2: false
+      }
+    ];
 
     function animateHearts() {
       if (heartIndex < hearts.length) {
@@ -45,53 +81,50 @@
         heartIndex++;
         setTimeout(animateHearts, 300);
       } else {
-        setTimeout(startQuiz, 1000);
+        setTimeout(showQuestion, 1000);
       }
     }
 
-    function startQuiz() {
+    function showQuestion() {
+      const q = questions[questionIndex];
       quizContainer.innerHTML = `
-        <p>Let's play a cute little quiz! 💕</p>
-        <p>Q1: Who is your favorite person in the whole world?</p>
-        <button onclick="answer(1)">You 😍</button>
-        <button onclick="answer(0)">Pizza 🍕</button>
+        <p>${q.q}</p>
+        <button onclick="checkAnswer(${q.correct1}, true)">${q.a1}</button>
+        <button onclick="checkAnswer(${q.correct2}, false)">${q.a2}</button>
       `;
     }
 
-    function answer(score) {
-      if (score === 1) {
+    function checkAnswer(correct, isFirstButton) {
+      if (correct) {
+        score++;
         quizContainer.innerHTML = `
-          <p>Correct! 🥰 You’re the smartest and cutest! 💖</p>
+          <p>Correct! 🥰 You nailed it! 💖</p>
           <button onclick="nextQuestion()">Next Question ➡️</button>
         `;
       } else {
         quizContainer.innerHTML = `
-          <p>Oops! Try again 😉</p>
-          <button onclick="startQuiz()">Retry Quiz 🔁</button>
+          <p>Oops! That wasn't it 😅</p>
+          <button onclick="showQuestion()">Retry This Question 🔁</button>
         `;
       }
     }
 
     function nextQuestion() {
-      quizContainer.innerHTML = `
-        <p>Q2: What’s my favorite thing to do with you?</p>
-        <button onclick="finalAnswer(1)">Talk forever 🥹</button>
-        <button onclick="finalAnswer(0)">Play video games 🎮</button>
-      `;
+      questionIndex++;
+      if (questionIndex < questions.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
     }
 
-    function finalAnswer(score) {
-      if (score === 1) {
-        quizContainer.innerHTML = `
-          <p>Aww yes! Talking to you is my fav thing ever 💕</p>
-          <p>You're amazing. End of the quiz... for now 😘</p>
-        `;
-      } else {
-        quizContainer.innerHTML = `
-          <p>Oops! Not quite 😅</p>
-          <button onclick="nextQuestion()">Try Question 2 Again 🔁</button>
-        `;
-      }
+    function showResult() {
+      quizContainer.innerHTML = `
+        <p>You completed the quiz! 🎉</p>
+        <p>Score: ${score} / ${questions.length}</p>
+        <p>I love you more than words, code, or logic can explain 💕</p>
+        <p>Forever yours, always 🫶</p>
+      `;
     }
 
     animateHearts();
