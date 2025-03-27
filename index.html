@@ -28,6 +28,7 @@
       padding: 10px;
       font-weight: bold;
       cursor: pointer;
+      margin-top: 10px;
     }
   </style>
 </head>
@@ -68,7 +69,10 @@
       if (score === 1) {
         quizContainer.innerHTML = "<p>Correct! 🥰 You’re the smartest and cutest! 💖</p>";
       } else {
-        quizContainer.innerHTML = "<p>Oops! Try again 😉</p>";
+        quizContainer.innerHTML = `
+          <p>Oops! Try again 😉</p>
+          <button onclick="startQuiz()">Retry Quiz 🔁</button>
+        `;
       }
     }
 
