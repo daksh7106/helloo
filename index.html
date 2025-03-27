@@ -68,11 +68,16 @@
     function answer(score) {
       if (score === 1) {
         quizContainer.innerHTML = "<p>Correct! 🥰 You’re the smartest and cutest! 💖</p>";
+        setTimeout(() => {
+          quizContainer.innerHTML += "\n<p>Restarting quiz for more love... 💞</p>";
+          setTimeout(startQuiz, 3000);
+        }, 2000);
       } else {
-        quizContainer.innerHTML = `
-          <p>Oops! Try again 😉</p>
-          <button onclick="startQuiz()">Retry Quiz 🔁</button>
-        `;
+        quizContainer.innerHTML = "<p>Oops! Try again 😉</p>";
+        setTimeout(() => {
+          quizContainer.innerHTML += "\n<p>Retrying... 🔁</p>";
+          setTimeout(startQuiz, 3000);
+        }, 2000);
       }
     }
 
