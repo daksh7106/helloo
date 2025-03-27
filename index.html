@@ -14,13 +14,6 @@
       white-space: pre-line;
       font-size: 18px;
     }
-    .heart {
-      animation: pulse 1s infinite alternate;
-    }
-    @keyframes pulse {
-      from { opacity: 0.3; }
-      to { opacity: 1; }
-    }
     button {
       background-color: lime;
       color: black;
@@ -50,7 +43,7 @@
       if (heartIndex < hearts.length) {
         heartContainer.innerHTML += hearts[heartIndex] + " ";
         heartIndex++;
-        setTimeout(animateHearts, 500);
+        setTimeout(animateHearts, 300);
       } else {
         setTimeout(startQuiz, 1000);
       }
@@ -67,17 +60,37 @@
 
     function answer(score) {
       if (score === 1) {
-        quizContainer.innerHTML = "<p>Correct! 🥰 You’re the smartest and cutest! 💖</p>";
-        setTimeout(() => {
-          quizContainer.innerHTML += "\n<p>Restarting quiz for more love... 💞</p>";
-          setTimeout(startQuiz, 3000);
-        }, 2000);
+        quizContainer.innerHTML = `
+          <p>Correct! 🥰 You’re the smartest and cutest! 💖</p>
+          <button onclick="nextQuestion()">Next Question ➡️</button>
+        `;
       } else {
-        quizContainer.innerHTML = "<p>Oops! Try again 😉</p>";
-        setTimeout(() => {
-          quizContainer.innerHTML += "\n<p>Retrying... 🔁</p>";
-          setTimeout(startQuiz, 3000);
-        }, 2000);
+        quizContainer.innerHTML = `
+          <p>Oops! Try again 😉</p>
+          <button onclick="startQuiz()">Retry Quiz 🔁</button>
+        `;
+      }
+    }
+
+    function nextQuestion() {
+      quizContainer.innerHTML = `
+        <p>Q2: What’s my favorite thing to do with you?</p>
+        <button onclick="finalAnswer(1)">Talk forever 🥹</button>
+        <button onclick="finalAnswer(0)">Play video games 🎮</button>
+      `;
+    }
+
+    function finalAnswer(score) {
+      if (score === 1) {
+        quizContainer.innerHTML = `
+          <p>Aww yes! Talking to you is my fav thing ever 💕</p>
+          <p>You're amazing. End of the quiz... for now 😘</p>
+        `;
+      } else {
+        quizContainer.innerHTML = `
+          <p>Oops! Not quite 😅</p>
+          <button onclick="nextQuestion()">Try Question 2 Again 🔁</button>
+        `;
       }
     }
 
